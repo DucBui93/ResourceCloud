@@ -78,7 +78,7 @@ namespace RC.API
             
             MVCConfig(services);
             DependenceInjection(services);
-            IdentityServer4(services);
+            //IdentityServer4(services);
 
             // configure strongly typed settings objects
             // configure jwt authentication
