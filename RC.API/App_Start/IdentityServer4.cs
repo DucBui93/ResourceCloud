@@ -1,63 +1,44 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using RC.Models;
+using RC.Models.EntityModels;
 
 namespace RC.API
 {
     public partial class Startup 
     {
-        public void IdentityServer4(IServiceCollection services)
+        public void IdentityServer4(IServiceCollection services, IConfigurationSection jwtsection)
         {
-            // configure identity server with in-memory stores, keys, clients and scopes
-            //services.AddMvcCore()
-            //    .AddAuthorization()
-            //    .AddJsonFormatters();
+            // configure strongly typed settings objects
+            // configure jwt authentication
+            var jwtSetting = jwtsection.Get<JwtIssuerSettings>();
+            var key = Encoding.ASCII.GetBytes(jwtSetting.SecretKey);
 
-            //services.AddAuthentication("Bearer")
-            //    .AddIdentityServerAuthentication(options =>
-            //    {
-            //        options.Authority = "http://localhost:5000";
-            //        options.RequireHttpsMetadata = false;
-
-            //        options.ApiName = "api1";
-            //    });
-
-            services.Configure<IISOptions>(iis =>
-            {
-                iis.AuthenticationDisplayName = "Windows";
-                iis.AutomaticAuthentication = false;
-            });
-
-            var builder = services.AddIdentityServer(options =>
-                {
-                    options.Events.RaiseErrorEvents = true;
-                    options.Events.RaiseInformationEvents = true;
-                    options.Events.RaiseFailureEvents = true;
-                    options.Events.RaiseSuccessEvents = true;
-                })
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryClients(Config.GetClients());
+                .AddInMemoryClients(Config.GetClients())
+                .AddAspNetIdentity<User>();
 
-            if (_hostingEnvironment.IsDevelopment())
-            {
-                builder.AddDeveloperSigningCredential();
-            }
-            else
-            {
-                throw new Exception("need to configure key material");
-            }
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddCookie()
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "https://localhost:5001";
+                    options.RequireHttpsMetadata = false;
 
-            services.AddAuthentication()
-              .AddGoogle(options =>
-              {
-                    // register your IdentityServer with Google at https://console.developers.google.com
-                    // enable the Google+ API
-                    // set the redirect URI to http://localhost:port/signin-google
-                    options.ClientId = "copy client ID from Google here";
-                    options.ClientSecret = "copy client secret from Google here";
-              });
+                    options.ApiName = "api1";
+                });
         }
     }
 }

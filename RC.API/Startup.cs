@@ -75,35 +75,10 @@ namespace RC.API
             ConfigIdentityDb(services);
             ConfigAppCookie(services);
             SwaggerConfig(services);
-            
+
             MVCConfig(services);
             DependenceInjection(services);
-            //IdentityServer4(services);
-
-            // configure strongly typed settings objects
-            // configure jwt authentication
-            var jwtSetting = jwtsection.Get<JwtIssuerSettings>();
-            var key = Encoding.ASCII.GetBytes(jwtSetting.SecretKey);
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(x =>
-                {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
-
-            //services.AddIdentityServer()
-            //    .AddDeveloperSigningCredential();
+            IdentityServer4(services, jwtsection);
 
             services.AddSingleton<IConfiguration>(Configuration);
             ServiceCollection = services;
@@ -185,8 +160,8 @@ namespace RC.API
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseAuthentication();
-            //app.UseIdentityServer();
+            //app.UseAuthentication();
+            app.UseIdentityServer();
 
             app.UseHttpsRedirection();
             app.UseMvc();
