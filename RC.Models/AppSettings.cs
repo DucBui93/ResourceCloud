@@ -21,6 +21,16 @@
         public int RefreshTokenValidFor { get; set; }
 
     }
+
+    public class BaseAuthInfor
+    {
+        public string Client { get; set; }
+        public string SecretKey { get; set; }
+        public string Authority { get; set; }
+        public bool RequireHttpsMetadata { get; set; }
+        public string APIName { get; set; }
+    }
+
     public class BaseUrl
     {
         public string API { get; set; }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentityServer4;
+﻿using IdentityServer4;
 using IdentityServer4.Models;
+using System.Collections.Generic;
 
 namespace RC.API
 {
@@ -15,7 +12,7 @@ namespace RC.API
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                new IdentityResources.Profile()
             };
         }
 
@@ -35,7 +32,7 @@ namespace RC.API
             {
                 new Client
                 {
-                    ClientId = "client",
+                    ClientId = "client.useCridential",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
 
                     ClientSecrets =
@@ -48,7 +45,7 @@ namespace RC.API
                 // resource owner password grant client
                 new Client
                 {
-                    ClientId = "ro.client",
+                    ClientId = "client.usePassword",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
                     ClientSecrets =

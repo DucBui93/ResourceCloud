@@ -78,7 +78,7 @@ namespace RC.API
 
             MVCConfig(services);
             DependenceInjection(services);
-            IdentityServer4(services, jwtsection);
+            IdentityServer4(services);
 
             services.AddSingleton<IConfiguration>(Configuration);
             ServiceCollection = services;

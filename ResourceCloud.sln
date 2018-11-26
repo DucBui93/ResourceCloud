@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RC.DataAccess", "RC.DataAcc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RC.Models", "RC.Models\RC.Models.csproj", "{F5BEAEE4-AF3B-4893-8F78-ED7C6A7E9B80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RC.IdentityServerAPI", "RC.IdentityServerAPI\RC.IdentityServerAPI.csproj", "{D4AB17AB-A9E1-474D-B9F1-EA7D75740D95}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{F5BEAEE4-AF3B-4893-8F78-ED7C6A7E9B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5BEAEE4-AF3B-4893-8F78-ED7C6A7E9B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5BEAEE4-AF3B-4893-8F78-ED7C6A7E9B80}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D4AB17AB-A9E1-474D-B9F1-EA7D75740D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4AB17AB-A9E1-474D-B9F1-EA7D75740D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4AB17AB-A9E1-474D-B9F1-EA7D75740D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4AB17AB-A9E1-474D-B9F1-EA7D75740D95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
